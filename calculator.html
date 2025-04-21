@@ -19,6 +19,8 @@
   </head>
 
   <body>
+    <p class="js-display-calculation"></p>
+
     <div>
       <button onclick="
         updateCalculation('1');
@@ -112,7 +114,7 @@
       
       <button onclick="
         calculation = eval(calculation);
-        console.log(calculation);
+        displayCalculation();
         localStorage.setItem('calculation', calculation);
       ">
         =
@@ -127,7 +129,7 @@
 
     <button style="width: fit-content;" onclick="
       calculation = '';
-      console.log(calculation);
+      displayCalculation();
       localStorage.removeItem('calculation');
     ">
       Clear
@@ -136,10 +138,16 @@
     <script>
       let calculation = localStorage.getItem('calculation') || '';
 
+      function displayCalculation() {
+        document.querySelector('.js-display-calculation').innerHTML = calculation;
+      }
+
+      displayCalculation();
+
       function updateCalculation(value) {
         calculation += value;
 
-        console.log(calculation);
+        displayCalculation();
 
         localStorage.setItem('calculation', calculation);
       }
