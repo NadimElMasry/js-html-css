@@ -26,12 +26,10 @@ function addTodo() {
 function renderTodoList() {
   let todoElementHTML = '';
 
-  for (let i = 0; i < todoList.length; i++) {
-    const todoObject = todoList[i];
-
+  todoList.forEach(function(todoObject, index) {
     if (!todoObject || typeof todoObject !== 'object' || !todoObject.name) {
-      continue;
-    } /* In case broken data was accidentally saved in localStorage (if the item is not a valid object or has no name), this code skips the loop. */
+      return;
+    } /* In case broken data was accidentally saved in localStorage (if the item is not a valid object or has no name), the return statement in this code exits the function. */
     
     // const name = todoObject.name;
     // const dueDate = todoObject.dueDate;
@@ -41,13 +39,14 @@ function renderTodoList() {
     <div>${name}</div>
     <div>${dueDate}</div> 
     <button onclick="
-      todoList.splice(${i}, 1);
+      todoList.splice(${index}, 1);
       renderTodoList();
       saveToStorage();
     " class="delete-todo-button">Delete</button>
     `;
     todoElementHTML += html;
-  }  
+  });
+    
   document.querySelector('.js-todo-list').innerHTML = todoElementHTML;
 }
 
